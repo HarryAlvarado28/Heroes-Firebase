@@ -1,16 +1,28 @@
 import { Injectable } from '@angular/core';
 import { HeroesLista } from './heroe.model';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HeroeService {
 
-  constructor() { }
+  constructor(private _firebase: AngularFirestore) { }
 
-  getHeroes(): HeroesLista[] {
-    return this.heroesListaData
+  getHeroes() {
+    return this._firebase.collection('ListaHeroes').valueChanges()
+    // return this.heroesListaData
   }
+
+  postHeroes(heroes: HeroesLista) {
+    this._firebase.collection('ListaHeroes').doc(heroes.nombre).set(heroes)
+  }
+
+  delete(heroeName: string) {
+    this._firebase.collection('ListaHeroes').doc(heroeName).delete()
+  }
+
+
 
   private heroesListaData: HeroesLista[] = [
     {

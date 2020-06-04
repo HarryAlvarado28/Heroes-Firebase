@@ -43,16 +43,23 @@ export class AppComponent {
       nombre: new FormControl('', Validators.required),
       descripcion: new FormControl(),
     })
-
-    this.heroesLista = this._heroesService.getHeroes()
+    this._heroesService.getHeroes().subscribe((resp: HeroesLista[]) => {
+      console.log('Respuesta::: ', resp)
+      this.heroesLista = resp
+    })
+    // this.heroesLista = this._heroesService.getHeroes()
   }
 
   onSubmit() {
     console.log('VALUE FORM:: ', this.heroesForm.value);
     (this.heroesForm.invalid) ? console.log('No valido') : console.log('Valido')
     console.log('Guardando')
-
+    this._heroesService.postHeroes(this.heroesForm.value)
     this.heroesForm.reset()
+  }
+
+  eliminar(heroeName: string) {
+    this._heroesService.delete(heroeName)
   }
 
 }

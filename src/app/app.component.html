@@ -65,7 +65,10 @@
           <div class="d-flex w-100 justify-content-between">
             <h5 class="mb-1">{{ heroe.nombre }}</h5>
             <small>
-              <button class="btn btn-outline-danger btn-sm">
+              <button
+                class="btn btn-outline-danger btn-sm"
+                (click)="eliminar(heroe.nombre)"
+              >
                 Eliminar
               </button>
             </small>
